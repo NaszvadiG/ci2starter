@@ -19,7 +19,7 @@
 
 			<?php if(validation_errors() != false):  ?>
 
-			  <div class="alert alert-error" role="alert">
+			  <div class="alert alert-danger alert-dismissible" role="alert">
 			  Validation Error
 			  </div>
 

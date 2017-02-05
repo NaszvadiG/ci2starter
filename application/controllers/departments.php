@@ -1,11 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Departments extends CI_Controller {
+class Departments extends MY_Controller {
 
 	public function __construct()
     {
             parent::__construct();
             $this->load->model('department_model');
+            
+            if (!$this->ion_auth->logged_in())
+    		{
+    			// redirect('auth/login');
+    		}
     }
 	
 	public function index()
@@ -21,6 +26,9 @@ class Departments extends CI_Controller {
 
 	public function create()
 	{
+		$this->form_validation->set_rules('department_name', 'Department Name', 'required');
+		$this->form_validation->set_rules('department_description', 'Department Description', 'required');
+
 		if ($this->form_validation->run() == FALSE) 
 		{
 			$data = array();
@@ -30,9 +38,12 @@ class Departments extends CI_Controller {
 			$this->load->view('backend/base_template',$data);
 		}
 		else{
+			
 			$data = array(
-					'department_name'=>$this->input->post('department_name')
+					'department_name'=>$this->input->post('department_name'),
+					'department_description'=>$this->input->post('department_description')
 					);
+
 			$this->department_model->create($data);
 			$this->session->set_flashdata('success', 'Record created');
 			redirect("departments", 'refresh');
@@ -41,6 +52,9 @@ class Departments extends CI_Controller {
 
 	public function edit()
 	{
+		$this->form_validation->set_rules('department_name', 'Department Name', 'required');
+		$this->form_validation->set_rules('department_description', 'Department Description', 'required');
+
 		$department_id = $this->uri->segment(3, 0);
 
 		if ($this->form_validation->run() == FALSE) 
@@ -56,12 +70,17 @@ class Departments extends CI_Controller {
 			$this->load->view('backend/base_template',$data);
 		}
 		else{
+
+			$department_id = $this->input->post('department_id');
+			
 			$data = array(
-					'department_name'=>$this->input->post('department_name')
+					'department_name'=>$this->input->post('department_name'),
+					'department_description'=>$this->input->post('department_description')
 					);
+
 			$this->department_model->update($department_id,$data);
 			$this->session->set_flashdata('success', 'Record updated');
-			redirect("posts/edit/$department_id", 'refresh');
+			redirect("departments/edit/$department_id", 'refresh');
 		}
 	}
 
@@ -83,7 +102,7 @@ class Departments extends CI_Controller {
 		$this->department_model->delete($department_id);
 
 		$this->session->set_flashdata('success', 'Record deleted');
-		redirect("posts", 'refresh');
+		redirect("departments", 'refresh');
 
 	}
 }

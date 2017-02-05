@@ -7,7 +7,7 @@ class Dashboard extends CI_Controller {
 	{
 		$data = array();
 
-		$data['content'] = 'backend/tables.php';
+		$data['content'] = 'backend/dashboard.php';
 
 		$this->load->view('backend/base_template',$data);
 	}

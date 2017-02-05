@@ -34,7 +34,7 @@
 											<?php if(isset($records)){ foreach ($records as $key => $row) { ?>
 
 											<tr>
-												<td></td>
+												<td><?php echo $row->department_id; ?></td>
 												<td><?php echo $row->department_name; ?></td>
 												<td><?php echo $row->department_description; ?></td>
 												<td>
