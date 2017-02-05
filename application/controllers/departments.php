@@ -105,6 +105,23 @@ class Departments extends MY_Controller {
 		redirect("departments", 'refresh');
 
 	}
+
+	function pdf()
+	{
+	     $this->load->helper(array('dompdf', 'file'));
+	     $department_id = $this->uri->segment(3, 0);
+	     
+	     $data['records'] = $this->department_model->get($department_id);
+		
+		 $data['content'] = 'backend/departments/show';
+
+	     $html = $this->load->view('backend/pdf_template', $data, true);
+	     pdf_create($html, 'filename');
+	     
+	     // $data = pdf_create($html, '', false);
+	     // write_file('name', $data);
+	     //if you want to write it to disk and/or send it as an attachment    
+	}
 }
 
 /* End of file dashboard.php */

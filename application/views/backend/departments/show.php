@@ -31,6 +31,7 @@
 				  </div>
 
 				  
+				  <a class="btn btn-warning" href="<?php echo site_url("departments/pdf/$records->department_id"); ?>" role="button">Download PDF</a>
 				  <a class="btn btn-default" href="<?php echo site_url("departments/index"); ?>" role="button">Cancel</a>
 
 				
